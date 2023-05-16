@@ -82,12 +82,9 @@ async function repeat() {
     openInput();
 }// repeat()
 
-var val1;
-var val2;
-
 var add = {
-    val1,
-    val2,
+    val1 : 0,
+    val2 : 0,
 
     start : () => {
         inputHandler = add.p1;
@@ -108,7 +105,7 @@ var add = {
         println(this.val1 + " + " + this.val2 + " = " + (this.val1 + this.val2));
         openInput();
     }// add.p2()
-}
+}// object add
 
 function command(arg) {
     switch(arg) {
