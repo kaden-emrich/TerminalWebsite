@@ -71,16 +71,44 @@ function unknownInput(arg) {
 }// unknownInput(arg)
 
 function repeater(argument) {
-    println(argument);
     inputHandler = command;
+    println(argument);
     openInput();
 }// repeater(argument)
 
-function repeat() {
+async function repeat() {
     inputHandler = repeater;
     print("Ok! Enter a value:");
     openInput();
 }// repeat()
+
+var val1;
+var val2;
+
+var add = {
+    val1,
+    val2,
+
+    start : () => {
+        inputHandler = add.p1;
+        print("Enter first value:");
+        openInput();
+    },// add.start()
+    
+    p1 : (value) => {
+        this.val1 = Number(value);
+        inputHandler = add.p2;
+        print("Enter second value:");
+        openInput();
+    },// add.p1(value)
+
+    p2 : (value) => {
+        this.val2 = Number(value);
+        inputHandler = command;
+        println(this.val1 + " + " + this.val2 + " = " + (this.val1 + this.val2));
+        openInput();
+    }// add.p2()
+}
 
 function command(arg) {
     switch(arg) {
@@ -90,6 +118,10 @@ function command(arg) {
 
         case "repeatAfterMe":
             repeat();
+            break;
+
+        case "add":
+            add.start();
             break;
 
         default:
