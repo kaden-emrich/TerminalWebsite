@@ -44,7 +44,7 @@ body {
 
 .greenGlow {
     color: #00ff00;
-    text-shadow: #0f0 0px 0px 5px, #0f0 0px 0px 10px;
+    text-shadow: #0f0 0px 0px 10px;
 }
 
 p {

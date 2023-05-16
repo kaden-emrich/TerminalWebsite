@@ -9,6 +9,7 @@ var inputValue = "";
 
 var inputOpen = false;
 var updateInterval;
+var inputHandler;
 
 /*----- Settings -----*/
 
@@ -69,11 +70,28 @@ function unknownInput(arg) {
     openInput();
 }// unknownInput(arg)
 
+function repeater(argument) {
+    println(argument);
+    inputHandler = command;
+    openInput();
+}// repeater(argument)
+
+function repeat() {
+    inputHandler = repeater;
+    print("Ok! Enter a value:");
+    openInput();
+}// repeat()
+
 function command(arg) {
     switch(arg) {
         case "helloWorld":
             helloWorld();
             break;
+
+        case "repeatAfterMe":
+            repeat();
+            break;
+
         default:
             unknownInput(arg);
             break;
@@ -88,7 +106,7 @@ document.addEventListener("keypress", function(event){
         if(event.keyCode == 13) {
             closeInput();
             newLine();
-            command(inputValue);
+            inputHandler(inputValue);
             inputValue = "";
         }
         else {
@@ -127,6 +145,7 @@ function createFirstLine() {
 
 function init() {
     updateInterval = setInterval(updateSize, 1000/30);
+    inputHandler = command;
     createFirstLine();
     closeInput();
     openInput();
