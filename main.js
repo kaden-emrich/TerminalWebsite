@@ -11,6 +11,9 @@ var inputOpen = false;
 var updateInterval;
 var inputHandler;
 
+var green = "greenGlow";
+var red = "redGlow";
+
 /*----- Settings -----*/
 
 var prompter = " >> ";
@@ -37,6 +40,9 @@ function closeInput() {
 function print(value) {
     currentLine.innerText += value;
 }// print(value)
+function printc(value, styleClass) {
+    currentLine.innerHTML += "<a class=\"" + styleClass + "\">" + value + "</a>";
+}// printc(value, styleClass)
 function println(value) {
     if(value) {
         print(value);
@@ -66,7 +72,8 @@ function helloWorld() {
 }// helloWorld()
 
 function unknownInput(arg) {
-    println("ERROR: Unknown input \"" + arg + "\"");
+    printc("ERROR: Unknown input \"" + arg + "\"", red);
+    println();
     openInput();
 }// unknownInput(arg)
 
@@ -102,10 +109,22 @@ var add = {
     p2 : (value) => {
         this.val2 = Number(value);
         inputHandler = command;
-        println(this.val1 + " + " + this.val2 + " = " + (this.val1 + this.val2));
+        println(this.val1 + "+" + this.val2 + "=" + (this.val1 + this.val2));
         openInput();
     }// add.p2()
 }// object add
+
+function other(arg) {
+    var input = arg.split(" ");
+
+    if(input[1] == "+") {
+        println(input[0] + " + " + input[2] + " = " + (Number(input[0]) + Number(input[2])));
+        openInput();
+        return true;
+    }
+
+    return false;
+}// other(arg)
 
 function command(arg) {
     switch(arg) {
@@ -121,8 +140,13 @@ function command(arg) {
             add.start();
             break;
 
+        case "":
+            openInput();
+            break;
+
         default:
-            unknownInput(arg);
+            if(other(arg) == false)
+                unknownInput(arg);
             break;
     }
 }// command(arg)
